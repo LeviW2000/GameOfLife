@@ -6,7 +6,7 @@ Created on Mon Feb 20 21:02:16 2023
 """
 
 class player:
-    def __init__(self, name, player, age, gender, money, retirement, car1, EndTurn):
+    def __init__(self, name, player, age, gender, money, retirement, car1, bEndTurn):
         self.name = 'name'
         self.player = 0
         self.age = 16
@@ -14,7 +14,7 @@ class player:
         self.money = 0
         self.retirement = 0
         self.car1 = car(0,0,0,0)
-        self.EndTurn = False
+        self.bEndTurn = False
         
     def buy_car(self):
         
@@ -55,7 +55,7 @@ class player:
     def quit_job():
         pass
     def finish_turn(self):
-        self.EndTurn = True
+        self.bEndTurn = True
 
 class vehicle:
     pass

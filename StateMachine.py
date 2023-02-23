@@ -6,6 +6,8 @@ Created on Tue Feb 21 20:33:07 2023
 """
 
 import time
+from RunAction import RunAction
+from EndRound import EndRound
 from Objects import player
 
 # Print function
@@ -19,16 +21,16 @@ def print_prompt():
     print('Have a child?     (Press 5)')
     print('Get a job?        (Press 6)')
     print('Quit your job?    (Press 7)')
-    print('End Turn?         (Press 8)')
+    print('View account?     (Press 8)')
+    print('End Turn?         (Press 9)')
 
 ########################### State Machine #################################
 def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
     State           = 0
     NextState       = 0
     GameDone        = False
-    Player_Number   = 0.0
     action          = 0
-    
+
     while (State != 6):
         
         if State == 0:                              # Idle
@@ -37,55 +39,74 @@ def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
             
         elif State == 1:                            # Set number of players
             print('How many players?')
-            Player_Number = input('How many players (1-4)?')
+            print('How many players (1-4)?')
+            Player_Number = input()
             Player_Number = int(Player_Number)
             NextState = 2
             
             
         elif State == 2:                            # Player 1 turn
-            PlayerOne.EndTurn = False
-            PlayerTwo.EndTurn = False
-            PlayerThree.EndTurn = False
-            PlayerFour.EndTurn = False
             print('Player 1 turn') 
             print('')
             print_prompt()
             action = input()
-            if Player_Number > 2:
-                if PlayerOne.EndTurn == True:    
+            action = int(action)
+            RunAction(action, PlayerOne)
+            if Player_Number >= 2:
+                if PlayerOne.bEndTurn == True:    
                     NextState = 3
             else:
-                if PlayerOne.EndTurn == True:
-                    NextState = 2
+                if PlayerOne.bEndTurn == True:
+                    NextState = 7
                     
                     
         elif State == 3:                            # Player 2 turn
             print('Player 2 turn')
-            if Player_Number > 3:
-                if PlayerTwo.EndTurn == True:    
+            print('')
+            print_prompt()
+            action = input()
+            action = int(action)
+            RunAction(action, PlayerTwo)
+            if Player_Number >= 3:
+                if PlayerTwo.bEndTurn == True:    
                     NextState = 4
             else:
-                if PlayerTwo.EndTurn == True:
-                    NextState = 2
+                if PlayerTwo.bEndTurn == True:
+                    NextState = 7
                 
                 
         elif State == 4:                            # Player 3 turn
-            print('Player 3 turn')        
-            if Player_Number > 4:
-                if PlayerThree.EndTurn == True:    
+            print('Player 3 turn') 
+            print('')
+            print_prompt()
+            action = input()
+            action = int(action)
+            RunAction(action, PlayerThree)
+            if Player_Number >= 4:
+                if PlayerThree.bEndTurn == True:    
                     NextState = 5
             else:
-                if PlayerThree.EndTurn == True:
-                    NextState = 2
+                if PlayerThree.bEndTurn == True:
+                    NextState = 7
                    
                     
         elif State == 5:                            # Player 4 turn
             print('Player 4 turn')    
+            print('')
+            print_prompt()
+            action = input()
+            action = int(action)
+            RunAction(action, PlayerFour)
             if PlayerFour.EndTurn == True:    
-                NextState = 2
+                NextState = 7
         
         elif State == 6:                            # Game finished state
             print('Game Over!')
+            
+        
+        elif State == 7:
+            EndRound(PlayerOne, PlayerTwo, PlayerThree, PlayerFour)
+            NextState = 2
             
             
         else:

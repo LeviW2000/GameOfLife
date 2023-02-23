@@ -20,28 +20,30 @@ player1 = player('null',0,0,0,0,0,0,0)
 player1.age = 16
 player1.gender = 1
 player1.money = 5000
+player1.bEndTurn = False
 
 player2 = player('null',0,0,0,0,0,0,0)
 player2.age = 16
 player2.gender = 1
 player2.money = 5000
+player2.bEndTurn = False
 
 player3 = player('null',0,0,0,0,0,0,0)
 player3.age = 16
 player3.gender = 1
 player3.money = 5000
+player3.bEndTurn = False
 
 player4 = player('null',0,0,0,0,0,0,0)
 player4.age = 16
 player4.gender = 1
 player4.money = 5000
+player4.bEndTurn = False
 
 print('Welcome to the game of life!')
 print('')
 
-GameDone = False
-
-StateMachine(player, player, player3, player4)
+StateMachine(player1, player2, player3, player4)
 
 
 
