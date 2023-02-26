@@ -6,6 +6,7 @@ Created on Tue Feb 21 20:33:07 2023
 """
 
 import time
+import numpy as np
 from RunAction import RunAction
 from EndRound import EndRound
 from Objects import player
@@ -14,18 +15,20 @@ from Objects import player
 def print_prompt():
     print('What would you like to do?')
     print('')
-    print('Buy a car?        (Press 1)')
-    print('Sell your car?    (Press 2)')
-    print('Buy a house?      (Press 3)')
-    print('Sell your house?  (Press 4)')
-    print('Have a child?     (Press 5)')
-    print('Get a job?        (Press 6)')
-    print('Quit your job?    (Press 7)')
-    print('View account?     (Press 8)')
-    print('End Turn?         (Press 9)')
+    print('Buy a car?         (Press 1)')
+    print('Sell your car?     (Press 2)')
+    print('Repair car?        (Press 3)')
+    print('Buy a house?       (Press 4)')
+    print('Sell your house?   (Press 5)')
+    print('Repair your house? (Press 6)')
+    print('Have a child?      (Press 7)')
+    print('Get a job?         (Press 8)')
+    print('Quit your job?     (Press 9)')
+    print('View account?      (Press 10)')
+    print('End Turn?          (Press 11)')
 
 ########################### State Machine #################################
-def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
+def StateMachine(Players):
     State           = 0
     NextState       = 0
     GameDone        = False
@@ -51,12 +54,12 @@ def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
             print_prompt()
             action = input()
             action = int(action)
-            RunAction(action, PlayerOne)
+            RunAction(action, Players[0])
             if Player_Number >= 2:
-                if PlayerOne.bEndTurn == True:    
+                if Players[0].bEndTurn == True:    
                     NextState = 3
             else:
-                if PlayerOne.bEndTurn == True:
+                if Players[0].bEndTurn == True:
                     NextState = 7
                     
                     
@@ -66,12 +69,12 @@ def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
             print_prompt()
             action = input()
             action = int(action)
-            RunAction(action, PlayerTwo)
+            RunAction(action, Players[1])
             if Player_Number >= 3:
-                if PlayerTwo.bEndTurn == True:    
+                if Players[1].bEndTurn == True:    
                     NextState = 4
             else:
-                if PlayerTwo.bEndTurn == True:
+                if Players[1].bEndTurn == True:
                     NextState = 7
                 
                 
@@ -81,12 +84,12 @@ def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
             print_prompt()
             action = input()
             action = int(action)
-            RunAction(action, PlayerThree)
+            RunAction(action, Players[2])
             if Player_Number >= 4:
-                if PlayerThree.bEndTurn == True:    
+                if Players[2].bEndTurn == True:    
                     NextState = 5
             else:
-                if PlayerThree.bEndTurn == True:
+                if Players[2].bEndTurn == True:
                     NextState = 7
                    
                     
@@ -96,8 +99,8 @@ def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
             print_prompt()
             action = input()
             action = int(action)
-            RunAction(action, PlayerFour)
-            if PlayerFour.EndTurn == True:    
+            RunAction(action, Players[3])
+            if Players[3].EndTurn == True:    
                 NextState = 7
         
         elif State == 6:                            # Game finished state
@@ -105,7 +108,7 @@ def StateMachine(PlayerOne, PlayerTwo, PlayerThree, PlayerFour):
             
         
         elif State == 7:
-            EndRound(PlayerOne, PlayerTwo, PlayerThree, PlayerFour)
+            EndRound(Players)
             NextState = 2
             
             

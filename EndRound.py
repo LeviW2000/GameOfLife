@@ -4,42 +4,53 @@ Created on Wed Feb 22 20:57:59 2023
 
 @author: Jerle
 """
+import numpy as np
 
-def EndRound(Player1, Player2, Player3, Player4):
+def EndRound(Players):
     
     # Reset end turns
-    Player1.bEndTurn = False
-    Player2.bEndTurn = False
-    Player3.bEndTurn = False
-    Player4.bEndTurn = False
+    for i in range(4):
+        Players[i].bEndTurn = False
     
     # Increment age
-    Player1.age = Player1.age + 1
-    Player2.age = Player2.age + 1
-    Player3.age = Player3.age + 1
-    Player4.age = Player4.age + 1
+    for i in range(4):
+        Players[i].age = Players[i].age + 1
     
     # WILL ADD ALL CAR STUFF INTO FUNCTIONS THAT WILL EVENTUALLY LIVE IN THEIR OWN FILE
     # Devalue cars if owns a car
-    if Player1.car1.brunning == True:
-        Player1.car1.rvalue = Player1.car1.rvalue * (1-.15) #loses 15 percent a year
-    if Player2.car1.brunning == True:
-        Player2.car1.rvalue = Player2.car1.rvalue * (1-.15)
-    if Player3.car1.brunning == True:
-        Player3.car1.rvalue = Player3.car1.rvalue * (1-.15)
-    if Player4.car1.brunning == True:
-        Player4.car1.rvalue = Player4.car1.rvalue * (1-.15)
-    
+    for i in range(4):
+        if Players[i].car1.brunning == True:
+            Players[i].car1.rvalue = Players[i].car1.rvalue * (1-.15) #loses 15 percent a year
     # Add car repairs
+    for i in range(4):
+        if Players[i].car1.brunning == True:
+            # Increment repairs
+            if Players[i].car1.car_type == 0:
+                Players[i].car1.irepairs = Players[i].car1.irepairs + 3
+            elif Players[i].car1.car_type == 1:
+                Players[i].car1.irepairs = Players[i].car1.irepairs + 2
+            elif Players[i].car1.car_type == 2:
+                Players[i].car1.irepairs = Players[i].car1.irepairs + 1
+            
+            if Players[i].car1.irepairs > 5:
+                Players[i].car1.brunning = False
     
-    
-    
-    
-    
+    # pay for homes and rent
+    for i in range(4):
+        if Players[i].house.home_exists == True:
+            Players[i].money = Players[i].money - Players[i].house.cost_per_year
+            if Players[i].money <= Players[i].house.cost_per_year:
+                Players[i].house.blivable = False
+                # add condition for being kicked out
     
     
     # Devaule homes if owns a home
+    
     # Add home repairs
+    for i in range(4):
+        if (Players[i].house.blivable == True) & (Players[i].house.home_type > 2):
+            pass
+    
     # Increase wage if had a job
     # Increase savings if had a job
     # Increase retirement
